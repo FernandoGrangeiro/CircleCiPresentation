@@ -1,10 +1,10 @@
 version: 2.1
 
 orbs:
- android: circleci/android@0.2.1
+  android: circleci/android@0.2.1
 
 jobs:
-  first-filter:
+  run-test:
     executor: android/android
     steps:
       - checkout
@@ -12,10 +12,17 @@ jobs:
           command: ./gradlew build
 
 workflows:
-  first-filter:
+  test-run:
     jobs:
-      - first-filter:
+      - run-test:
         filters:
           branches:
             only:
-              - master
+              - feijao1
+  arroz-com-feijao:
+    jobs:
+      - run-test:
+        filters:
+          branches:
+            only:
+              - feijao2

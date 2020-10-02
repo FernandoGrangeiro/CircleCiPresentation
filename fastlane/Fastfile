@@ -6,18 +6,19 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+  desc "Submit a new Alpha Apk to Alpha Track in Google Play Console"
+  lane :alpha do |options|
+         properties = {
+           "android.injected.signing.store.file" => "keystore.jks",
+           "android.injected.signing.store.password" => ENV['RELEASE_KEY_PASSWORD'],
+           "android.injected.signing.key.alias" => ENV['RELEASE_KEY_ALIAS'],
+           "android.injected.signing.key.password" => ENV['RELEASE_STORE_PASSWORD'],
+         }
+
+        gradle(task: 'assemble',
+			   properties: properties)
+        upload_to_play_store(track:"alpha")
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
 end
+

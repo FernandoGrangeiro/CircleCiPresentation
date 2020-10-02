@@ -19,10 +19,3 @@ workflows:
           branches:
             only:
               - feijao1
-  arroz-com-feijao:
-    jobs:
-      - run-test:
-        filters:
-          branches:
-            only:
-              - feijao2

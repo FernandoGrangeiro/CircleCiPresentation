@@ -37,7 +37,7 @@ references:
       name: Create Google Play Key
       command: echo $GOOGLE_PLAY_KEY | base64 -d | tee google-play-key.json app/google-play-key.json > /dev/null
 jobs:
-  run-test:
+  test-unit:
     executor: android/android
     steps:
       - checkout
@@ -59,10 +59,26 @@ jobs:
           command: bundle exec fastlane alpha
 
 workflows:
-  test-run:
+  unit-tests:
     jobs:
-      - test-deploy:
+      - test-unit:
         filters:
           branches:
             only:
-              - master
+              - feijao3
+  teste_and_deploy:
+    jobs:
+      - test-unit
+      - hold:
+          type: approval
+          requires:
+            - test-unit
+      - test-deploy:
+          requires:
+            - hold
+          filters:
+            branches:
+              only:
+                - master
+
+

@@ -68,14 +68,7 @@ workflows:
               - feijao3
   teste_and_deploy:
     jobs:
-      - test-unit
-      - hold:
-          type: approval
-          requires:
-            - test-unit
       - test-deploy:
-          requires:
-            - hold
           filters:
             branches:
               only:

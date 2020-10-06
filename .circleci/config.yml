@@ -63,9 +63,10 @@ workflows:
   unit-tests:
     jobs:
       - test-unit:
-          branches:
-            only:
-              - feijao3
+          filters:
+            branches:
+              only:
+                - feijao3
   teste_and_deploy:
     jobs:
       - test-unit
@@ -76,8 +77,9 @@ workflows:
       - test-deploy:
           requires:
             - hold
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - feijao3
 
 

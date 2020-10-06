@@ -59,11 +59,10 @@ jobs:
           command: bundle exec fastlane alpha
 
 workflows:
-  version: 2
+  version: 2.1
   unit-tests:
     jobs:
       - test-unit:
-        context: org-global
         filters:
           branches:
             only:

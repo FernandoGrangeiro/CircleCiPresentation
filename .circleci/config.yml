@@ -59,14 +59,13 @@ jobs:
           command: bundle exec fastlane alpha
 
 workflows:
-  version: 2
+  version: 2.1
   unit-tests:
     jobs:
       - test-unit:
-          filters:
-            branches:
-              only:
-                - feijao3
+          branches:
+            only:
+              - feijao3
   teste_and_deploy:
     jobs:
       - test-unit
@@ -77,9 +76,8 @@ workflows:
       - test-deploy:
           requires:
             - hold
-          filters:
-            branches:
-              only:
-                - feijao3
+          branches:
+            only:
+              - feijao3
 
 

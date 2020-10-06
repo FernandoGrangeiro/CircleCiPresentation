@@ -11,3 +11,9 @@ jobs:
       - checkout
       - run:
           command: ./gradlew build
+
+workflows:
+  version: 2.1
+  unit-tests:
+    jobs:
+      - build

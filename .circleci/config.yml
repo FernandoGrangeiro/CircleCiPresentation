@@ -26,4 +26,7 @@ workflows:
   version: 2.1
   unit-tests:
     jobs:
-      - tests-and-builds
+      - tests-and-builds:
+          filters:
+            branches:
+              only: cachorro

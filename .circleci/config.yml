@@ -3,6 +3,13 @@ version: 2.1
 orbs:
   android: circleci/android@0.2.1
 
+references:
+  create_google_play_key: &create_google_play_key
+    run:
+      name: Create Google Play Key
+      command: echo $GOOGLE_PLAY_KEY | base64 -d | tee google-play-key.json app/google-play-key.json > /dev/null
+
+
 jobs:
   build:
     executor: android/android
@@ -21,6 +28,7 @@ jobs:
       - run:
           name: Build Project
           command: ./gradlew build
+      - *create_google_play_key
 
 workflows:
   version: 2.1

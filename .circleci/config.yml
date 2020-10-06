@@ -63,6 +63,7 @@ workflows:
   unit-tests:
     jobs:
       - test-unit:
+        context: org-global
         filters:
           branches:
             only:

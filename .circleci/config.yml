@@ -63,9 +63,9 @@ workflows:
   unit-tests:
     jobs:
       - test-unit:
-        filters:
-          branches:
-            only: cachorro
+          filters:
+            branches:
+              only: cachorro
   teste_and_deploy:
     jobs:
       - test-unit:

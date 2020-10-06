@@ -6,14 +6,24 @@ orbs:
 jobs:
   build:
     executor: android/android
-
     steps:
       - checkout
       - run:
+          command: ./gradlew build
+
+  tests-and-builds:
+    executor: android/android
+    steps:
+      - checkout
+      - run:
+          name: Run Tests
+          command: ./gradlew test
+      - run:
+          name: Build Project
           command: ./gradlew build
 
 workflows:
   version: 2.1
   unit-tests:
     jobs:
-      - build
+      - tests-and-builds

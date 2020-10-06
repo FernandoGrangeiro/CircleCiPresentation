@@ -68,10 +68,7 @@ workflows:
               only: cachorro
   teste_and_deploy:
     jobs:
-      - test-unit:
-          filters:
-            branches:
-              only: cachorro
+      - test-unit
       - hold:
           type: approval
           requires:

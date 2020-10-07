@@ -75,12 +75,15 @@ workflows:
       - unit-test:
           filters:
             branches:
-              only: master
+              only: feijao
       - build:
           filters:
             branches:
-              only: master
+              only: feijao
 
   run-deploy-alpha:
     jobs:
-      - deploy-alpha
+      - unit-test
+      - deploy-alpha:
+          requires:
+            - unit-test

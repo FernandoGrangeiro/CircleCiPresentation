@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   android: circleci/android@0.2.1
 
-  
+
 jobs:
   build:
     executor: android/android
@@ -11,3 +11,9 @@ jobs:
       - checkout
       - run:
           command: ./gradlew assemble
+
+worksflows:
+  version: 2.1
+  run-unit-tests:
+    jobs:
+      - build

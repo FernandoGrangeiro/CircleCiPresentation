@@ -54,6 +54,19 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+  deploy-alpha:
+    executor: android/android
+    steps:
+      - checkout
+      - *restore_gems_cache
+      - *ruby_dependencies
+      - *decode_android_key
+      - *android_dependencies
+      - *save_gems_cache
+      - *create_google_play_key
+      - run:
+          name: Run Deploy to alpha
+          command: fastlane alpha
 
 workflows:
   version: 2.1
@@ -67,3 +80,7 @@ workflows:
           filters:
             branches:
               only: master
+
+  run-deploy-alpha:
+    jobs:
+      - deploy-alpha

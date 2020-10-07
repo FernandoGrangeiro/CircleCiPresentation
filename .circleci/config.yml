@@ -24,4 +24,7 @@ workflows:
   run-unit-tests:
     jobs:
       - unit-test
-      - build
+      - build:
+          filters:
+            branches:
+              only: master

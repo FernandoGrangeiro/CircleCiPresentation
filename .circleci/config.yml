@@ -66,7 +66,20 @@ jobs:
       - *create_google_play_key
       - run:
           name: Run Deploy to alpha
-          command: fastlane alpha
+          command: bundle exec fastlane alpha
+  deploy-prod:
+    executor: android/android
+    steps:
+      - checkout
+      - *restore_gems_cache
+      - *ruby_dependencies
+      - *decode_android_key
+      - *android_dependencies
+      - *save_gems_cache
+      - *create_google_play_key
+      - run:
+          name: Run Deploy to prod
+          command: bundle exec fastlane prod
 
 workflows:
   version: 2.1
@@ -87,3 +100,20 @@ workflows:
       - deploy-alpha:
           requires:
             - unit-test
+
+  run-deploy-prod:
+    jobs:
+      - unit-test
+      - deploy-alpha:
+          requires:
+            - unit-test
+      - holder:
+          type: approval
+          requires:
+            - unit-test
+            - deploy-alpha
+      - deploy-prod:
+          requires:
+            - unit-test
+            - deploy-alpha
+            - holder

@@ -13,4 +13,17 @@ platform :android do
                  properties: properties)
           upload_to_play_store(track:"alpha")
    end
+
+     desc "Run Deploy Prod"
+      lane :prod do |options|
+             properties = {
+                    "android.injected.signing.store.file" => "keystore.jks",
+                    "android.injected.signing.store.password" => ENV['RELEASE_KEY_PASSWORD'],
+                    "android.injected.signing.key.alias" => ENV['RELEASE_KEY_ALIAS'],
+                    "android.injected.signing.key.password" => ENV['RELEASE_STORE_PASSWORD'],
+             }
+             gradle(task: 'bundle',
+                    properties: properties)
+             supply(skip_upload_apk: true, track:"alpha")
+      end
 end

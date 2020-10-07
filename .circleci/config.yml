@@ -15,7 +15,7 @@ jobs:
     executor: android/android
     steps:
       - checkout
-      - run :
+      - run:
           name: Run Unit Tests
           command: ./gradlew test
 
@@ -23,8 +23,13 @@ workflows:
   version: 2.1
   run-unit-tests:
     jobs:
-      - unit-test
+      - unit-test:
+          filters:
+            branches:
+              only: master
       - build:
           filters:
             branches:
               only: master
+
+

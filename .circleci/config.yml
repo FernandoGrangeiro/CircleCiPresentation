@@ -3,11 +3,19 @@ version: 2.1
 orbs:
   android: circleci/android@0.2.1
 
+
+references:
+  only_run_build: &only_run_build
+    run:
+      name: Only run Build
+      command: ./gradlew build
+
 jobs:
   build:
     executor: android/android
     steps:
       - checkout
+      - *only_run_build
       - run:
           command: ./gradlew build
 
@@ -15,7 +23,7 @@ jobs:
     executor: android/android
     steps:
       - checkout
-      - run :
+      - run:
           name: Run Unit Tests
           command: ./gradlew test
 
@@ -23,7 +31,10 @@ workflows:
   version: 2.1
   run-unit-tests:
     jobs:
-      - unit-test
+      - unit-test:
+          filters:
+            branches:
+              only: master
       - build:
           filters:
             branches:

@@ -67,6 +67,16 @@ jobs:
       - run:
           name: Run Deploy to alpha
           command: bundle exec fastlane alpha
+  generate-apk:
+    executor: android/android
+    steps:
+      - checkout
+      - run:
+          command: ./gradlew assemble
+      - store_artifacts:
+          path: app/build/outputs/apk/
+          destination: /apk
+
   deploy-prod:
     executor: android/android
     steps:
@@ -104,16 +114,11 @@ workflows:
   run-deploy-prod:
     jobs:
       - unit-test
-      - deploy-alpha:
-          requires:
-            - unit-test
       - holder:
           type: approval
           requires:
             - unit-test
-            - deploy-alpha
-      - deploy-prod:
+      - generate-apk:
           requires:
-            - unit-test
-            - deploy-alpha
             - holder
+   
